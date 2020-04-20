@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('builder') }}
+{% endblock %}
+
+{% block title %}Hello AppController!{% endblock %}
+
+{% block body %}
+
+    <h1>Builder</h1>
+    <div class="js-builder" id="builder">
+    </div>
+
+    <button id="previewBtn" class="btn btn-primary">Preview</button>
+    <h3>Preview</h3>
+    <div id="formeo-render">
+        Rendered form here.
+    </div>
+    <button id="saveBtn" class="btn btn-success">Submit Data</button>
+{% endblock %}

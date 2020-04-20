@@ -1,0 +1,4 @@
+home:
+    title: 'formeo-demo Title'
+    intro: 'Intro to formeo-demo Title'
+    description: 'Symfony5 (with api-platform) and Formeo Javascript library'
