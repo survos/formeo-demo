@@ -29,8 +29,8 @@
     </div>
     <hr />
 
+    {# this is for the admin view #}
     {% set formData = survey.formData %}
-
     <ul>
     {% for id, field in formData.fields %}
     <li>{{ id|slice(0, 4) }} <b>{{ field.config.label|default('') }}</b>
@@ -51,7 +51,7 @@
     </li>
     {% endfor %}
     </ul>
-    <table class="table">
+    <table class="table table-sm">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -83,7 +83,24 @@
     {{ include('survey/_delete_form.html.twig') }}
 
     <hr />
-    {% for response in survey.responses %}
-        {{ dump(response) }}
-    {% endfor %}
+    <table class="table table-sm">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Response</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for response in survey.responses %}
+            <tr>
+                <td>
+                    {{ response.id }}
+                </td>
+                <td>
+                    {{ response.data|map((d) => "<span class='text text-muted'>#{d.name}</span> <b>#{d.value}</b>")|join('<br /> ')|raw }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
