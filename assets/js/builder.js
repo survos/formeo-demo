@@ -4,6 +4,7 @@ require('formeo');
 import('formeo/dist/formeo.min.css');
 
 let $el = document.querySelector('#formeo-render');
+const Routing = global.Routing;
 
 let renderedForm = new FormeoRenderer({ renderContainer: $el});
 
@@ -22,6 +23,11 @@ var formeo = new FormeoEditor({
     },
     editorContainer: '#builder',
 });
+
+let surveyId = 1;
+let fetchUrl =  Routing.generate('api_surveys_get_item', {id: surveyId});
+
+$.ajax(fetchUrl, {})
 
 $('#previewBtn').click( function() {
     console.log('rendering form', formeo.formData);

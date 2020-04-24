@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SurveyRepository")
@@ -23,6 +26,7 @@ class Survey
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"name"})
      */
     private $code;
 
@@ -46,6 +50,17 @@ class Survey
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isPublished;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Response", mappedBy="survey", orphanRemoval=true)
+     * @ORM\OrderBy({"id": "DESC"})
+     */
+    private $responses;
+
+    public function __construct()
+    {
+        $this->responses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +135,37 @@ class Survey
     public function setIsPublished(?bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Response[]
+     */
+    public function getResponses(): Collection
+    {
+        return $this->responses;
+    }
+
+    public function addResponse(Response $response): self
+    {
+        if (!$this->responses->contains($response)) {
+            $this->responses[] = $response;
+            $response->setSurvey($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponse(Response $response): self
+    {
+        if ($this->responses->contains($response)) {
+            $this->responses->removeElement($response);
+            // set the owning side to null (unless already changed)
+            if ($response->getSurvey() === $this) {
+                $response->setSurvey(null);
+            }
+        }
 
         return $this;
     }

@@ -1,2 +1,4 @@
 App\Entity\Survey: ~
+App\Entity\Response: ~
 App\Entity\User: ~
+

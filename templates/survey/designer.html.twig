@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('survey_designer') }}
+{% endblock %}
+
+{% block title %}Survey{% endblock %}
+
+{% block body %}
+    <h1>Survey Manager</h1>
+
+    <div class="row">
+        <div class="col">
+            <code>#survey-editor</code>
+            <div id="survey-editor" class="formeo-wrap" data-survey-id="{{ survey.id }}">
+                Survey Editor.
+            </div>
+        </div>
+        <div class="col">
+            <div id="collection-fields" class="js-jstree">
+                Tree view, need to populate this with javascript (underscore?)
+            </div>
+        </div>
+        <div class="col">
+            <form action="#" id="test_form">
+            <div id="rendered-form">
+                Form elements
+            </div>
+            </form>
+            <a class="btn btn-secondary" href="{{ path('survey_show', {id: survey.id}) }}">Show/Take Survey</a>
+
+            <button class="btn btn-danger" id="saveResponsesBtn">Save Answers</button>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" id="reloadBtn">Reload</button>
+    <button class="btn btn-success" id="previewBtn">Preview</button>
+    <a href="{{ path('survey_edit', {'id': survey.id}) }}">raw edit</a>
+
+{% endblock %}

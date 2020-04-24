@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('survey_renderer') }}
+{% endblock %}
+
+{% block title %}Survey{% endblock %}
+
+{% block body %}
+    <h1>{{ survey.name }}</h1>
+
+    <div class="row">
+        <div class="col">
+            <form id="survey-form" data-survey-id="{{ survey.id }}">
+                <div id="rendered-form">
+                    Rendered Survey here.
+                </div>
+            </form>
+            <button id="saveResponsesBtn" class="btn btn-success">Save Response</button>
+            <button id="saveResponsesToDatabaseBtn" class="btn btn-danger">Save Response To Database</button>
+        </div>
+        <div class="col">
+            Survey Response Data
+            <ul id="response_data">
+
+            </ul>
+        </div>
+    </div>
+    <hr />
+
+    {% set formData = survey.formData %}
+
+    <ul>
+    {% for id, field in formData.fields %}
+    <li>{{ id|slice(0, 4) }} <b>{{ field.config.label|default('') }}</b>
+        <code>{{ field.tag }}</code>
+
+        <i>{{ field.attrs.type|default('') }}</i>
+
+        {% if field.options|default(false) %}
+        <ul>
+            {% for option in field.options %}
+            <li>
+                O: {{ option.label }}: {{ option.value|default('') }} {{ option.className|default() }} <u>{{ option.type|default }}</u>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+    </li>
+    {% endfor %}
+    </ul>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ survey.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ survey.name }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ survey.code }}</td>
+            </tr>
+            <tr>
+                <th>IsPublic</th>
+                <td>{{ survey.isPublic ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsPublished</th>
+                <td>{{ survey.isPublished ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('survey_edit', {'id': survey.id}) }}">edit</a>
+    <a href="{{ path('survey_designer', {'id': survey.id}) }}">Designer</a>
+
+    {{ include('survey/_delete_form.html.twig') }}
+
+    <hr />
+    {% for response in survey.responses %}
+        {{ dump(response) }}
+    {% endfor %}
+{% endblock %}

@@ -16,6 +16,9 @@ $menu->setChildrenAttribute('class', 'nav navbar-nav mr-auto');
 $menu->addChild('app_build_form', ['route' => 'app_build_form'])->setAttribute('icon', 'fas fa-home');
 $menu->addChild('api_entrypoint', ['route' => 'api_entrypoint'])->setAttribute('icon', 'fas fa-home');
 
+$menu->addChild('survey_index', ['route' => 'survey_index'])->setAttribute('icon', 'fas fa-home');
+$menu->addChild('survey_new', ['route' => 'survey_new'])->setAttribute('icon', 'fas fa-home');
+
 $menu->addChild('survos_landing', ['route' => 'app_homepage'])->setAttribute('icon', 'fas fa-home');
 
 $menu->addChild('survos_landing_credits', ['route' => 'survos_landing_credits'])->setAttribute('icon', 'fas fa-trophy');
