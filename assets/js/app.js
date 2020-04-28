@@ -6,7 +6,7 @@ const Popper = require('popper.js');
 require('../css/app.css');
 
 // require('jquery-ui');
-// require('../../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte');
+// require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte');
 
 require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
@@ -16,5 +16,14 @@ import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/pu
 Routing.setRoutingData(routes);
 global.Routing = Routing;
 global.$ = $;
+
+require('admin-lte/dist/css/AdminLTE.min.css');
+require('admin-lte/dist/css/skins/_all-skins.css');
+require('../../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte.scss');
+require('../../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte-extensions.scss');
+global.jQuery = $;
+global.$.AdminLTE = {};
+global.$.AdminLTE.options = {};
+require('admin-lte/dist/js/adminlte.min');
 
 

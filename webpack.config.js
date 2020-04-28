@@ -29,7 +29,7 @@ Encore
     .addEntry('builder', './assets/js/builder.js')
 
     // generate only two files: app.js and app.css
-    .addEntry('adminlte', './assets/adminlte-demo.js')
+//    .addEntry('adminlte', './assets/adminlte-demo.js')
 
     // .addEntry('adminlte', './vendor/')
     //.addEntry('page1', './assets/js/page1.js')
