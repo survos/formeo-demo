@@ -10,6 +10,7 @@
         {# always include app?  Or add it to stylesheets block and always call parent? #}
         {{ parent() }}
         {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('adminlte') }}
     {% endblock %}
 
 {% block page_content %}
