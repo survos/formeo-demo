@@ -1,1 +1,17 @@
-{% extends "@SurvosLanding/base.html.twig" %}
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+    {% block stylesheets %}
+        {# always include app?  Or add it to stylesheets block and always call parent? #}
+        {{ encore_entry_link_tags('app') }}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {# always include app?  Or add it to stylesheets block and always call parent? #}
+        {{ parent() }}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+
+{% block page_content %}
+    {{ block('body') }}
+{% endblock %}

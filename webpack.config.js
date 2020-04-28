@@ -27,6 +27,11 @@ Encore
     .addEntry('survey_designer', './assets/js/survey_designer.js')
     .addEntry('survey_renderer', './assets/js/survey_renderer.js')
     .addEntry('builder', './assets/js/builder.js')
+
+    // generate only two files: app.js and app.css
+    .addEntry('adminlte', './assets/adminlte-demo.js')
+
+    // .addEntry('adminlte', './vendor/')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 
@@ -36,7 +41,8 @@ Encore
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
-
+    // enable sass/scss parser
+    .enableSassLoader()
     /*
      * FEATURE CONFIG
      *
@@ -54,6 +60,10 @@ Encore
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
         config.corejs = 3;
+    })
+
+    .enableSassLoader(function(sassOptions) {}, {
+        resolveUrlLoader: false
     })
 
     // enables Sass/SCSS support

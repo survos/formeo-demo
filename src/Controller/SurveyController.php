@@ -22,7 +22,19 @@ class SurveyController extends AbstractController
     public function index(SurveyRepository $surveyRepository): Response
     {
         return $this->render('survey/index.html.twig', [
-            'surveys' => $surveyRepository->findAll(),
+            'surveys' => $surveyRepository->findBy(['isPublic' => true, 'isPublished' => true]),
+        ]);
+    }
+
+    /**
+     * @Route("/dashboard", name="survey_dashboard", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function dashboard(SurveyRepository $surveyRepository): Response
+    {
+        $user = $this->getUser();
+        return $this->render('survey/dashboard.html.twig', [
+            'surveys' => $user->getSurveys()
         ]);
     }
 
@@ -32,7 +44,9 @@ class SurveyController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $survey = (new Survey())->setOwner($this->getUser());
+        $survey = (new Survey())
+            ->setDesignerType(Survey::DESIGNER_TYPE_FORMBUILDER)
+            ->setOwner($this->getUser());
 
         $form = $this->createForm(SurveyType::class, $survey);
         $form->handleRequest($request);
@@ -42,7 +56,7 @@ class SurveyController extends AbstractController
             $entityManager->persist($survey);
             $entityManager->flush();
 
-            return $this->redirectToRoute('survey_index');
+            return $this->redirectToRoute('survey_designer', $survey->getRP());
         }
 
         return $this->render('survey/new.html.twig', [

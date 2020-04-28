@@ -97,7 +97,14 @@
                     {{ response.id }}
                 </td>
                 <td>
+                    {{ response.data|json_encode }}
+                    {#
+                    {% if response.data is iterable %}
                     {{ response.data|map((d) => "<span class='text text-muted'>#{d.name}</span> <b>#{d.value}</b>")|join('<br /> ')|raw }}
+                    {% else %}
+                        {{ response.data }}
+                        {% endif %}
+                        #}
                 </td>
             </tr>
         {% endfor %}

@@ -226,6 +226,7 @@ export class FormeoManager
 
         return {
             debug:false,
+            // container: '#' + this.$element.attr('id'),
             editorContainer: '#' + this.$element.attr('id'),
             events,
             controls}

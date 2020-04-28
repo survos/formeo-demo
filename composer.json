@@ -10,6 +10,7 @@
         "easycorp/easyadmin-bundle": "^2.3",
         "friendsofsymfony/jsrouting-bundle": "^2.5",
         "jwage/easy-csv": "^1.0",
+        "kevinpapst/adminlte-bundle": "^3.0",
         "sensio/framework-extra-bundle": "^5.1",
         "survos/landing-bundle": "^1.7",
         "symfony/asset": "5.0.*",
@@ -86,7 +87,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "5.0.*"
         }
     }

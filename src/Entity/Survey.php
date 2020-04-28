@@ -6,12 +6,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Survos\LandingBundle\Entity\SurvosBaseEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SurveyRepository")
  */
-class Survey
+class Survey extends SurvosBaseEntity
 {
+    const DESIGNER_TYPE_FORMBUILDER = 'formbuilder';
+    const DESIGNER_TYPE_FORMEO = 'formeo';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -57,8 +60,14 @@ class Survey
      */
     private $responses;
 
+    /**
+     * @ORM\Column(type="string", length=16)
+     */
+    private $designerType;
+
     public function __construct()
     {
+        $this->designerType == self::DESIGNER_TYPE_FORMBUILDER;
         $this->responses = new ArrayCollection();
     }
 
@@ -166,6 +175,23 @@ class Survey
                 $response->setSurvey(null);
             }
         }
+
+        return $this;
+    }
+
+    function getUniqueIdentifiers()
+    {
+        return ['id' => $this->getId()];
+    }
+
+    public function getDesignerType(): ?string
+    {
+        return $this->designerType;
+    }
+
+    public function setDesignerType(string $designerType): self
+    {
+        $this->designerType = $designerType;
 
         return $this;
     }

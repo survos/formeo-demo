@@ -7,35 +7,83 @@ use Survos\LandingBundle\Menu\LandingMenuBuilder;
 class MenuBuilder extends LandingMenuBuilder
 {
 
-    public function createMainMenu(array $options)
+    // for the landing pages, we have a top navigation bar and the blocks in the body
+    public function createLandingMenu(array $options) {
+        $menu = $this->factory->createItem('root')
+            ->setExtra('translation_domain', true)
+        ;
+        $menu->addChild('public_surveys',
+            ['route' => 'survey_index'])->setAttribute('icon', 'fas fa-home');
+        $menu->addChild('survey_dashboard',
+            [
+                // 'label' => 'survey_index',
+                'route' => 'survey_dashboard'])->setAttribute('icon', 'fas fa-home');
+// $menu->addChild('survey_new', ['route' => 'survey_new'])->setAttribute('icon', 'fas fa-home');
+
+        return $this->cleanupMenu($menu);
+
+    }
+
+    public function createAdminMenu(array $options)
     {
-        $menu = $this->factory->createItem('root');
+        $menu = $this->factory->createItem('root')
+            ->setExtra('translation_domain', true)
+        ;
 
-$menu->setChildrenAttribute('class', 'nav navbar-nav mr-auto');
+        $childOptions = [
+            'attributes' => ['class' => 'treeview'],
+            'childrenAttributes' => ['class' => 'treeview-item'],
+            'labelAttributes' => []
+        ];
 
-$menu->addChild('app_build_form', ['route' => 'app_build_form'])->setAttribute('icon', 'fas fa-home');
-$menu->addChild('api_entrypoint', ['route' => 'api_entrypoint'])->setAttribute('icon', 'fas fa-home');
+        $publicMenu = $menu->addChild('public', [
+            'childOptions' => $childOptions,
+        ]);
+        $publicMenu->addChild('public_surveys',
+            [
+                'childOptions' => $childOptions,
+                'route' => 'survey_index'])
+            ->setAttribute('icon', 'fas fa-home');
 
-$menu->addChild('survey_index', ['route' => 'survey_index'])->setAttribute('icon', 'fas fa-home');
-$menu->addChild('survey_new', ['route' => 'survey_new'])->setAttribute('icon', 'fas fa-home');
+        $publicMenu->addChild('survos_landing', [
+            'childOptions' => $childOptions,
+            'route' => 'app_homepage'])
+            ->setAttribute('icon', 'fas fa-home');
 
-$menu->addChild('survos_landing', ['route' => 'app_homepage'])->setAttribute('icon', 'fas fa-home');
+        return $menu;
 
-$menu->addChild('survos_landing_credits', ['route' => 'survos_landing_credits'])->setAttribute('icon', 'fas fa-trophy');
-$menu->addChild('app_typography', ['route' => 'app_typography'])->setAttribute('icon', 'fab fa-bootstrap');
+        $surveyMenu = $menu->addChild('survey.menu', [
+            'childOptions' => $childOptions,
+        ]);
+        $surveyMenu->addChild('survey.new', ['route' => 'survey_new']);
+        $surveyMenu->addChild('survey.list', ['route' => 'survey_index']);
+        $menu->addChild('survey_dashboard',
+            [
+                // 'label' => 'survey_index',
+                'route' => 'survey_dashboard'])->setAttribute('icon', 'fas fa-home');
+// $menu->addChild('survey_new', ['route' => 'survey_new'])->setAttribute('icon', 'fas fa-home');
 
-try {
-} catch (\Exception $e) {
-    // probably not loaded.
-}
+
+
+        try {
+        } catch (\Exception $e) {
+            // probably not loaded.
+        }
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $menu->addChild('survos_landing_credits', ['route' => 'survos_landing_credits'])->setAttribute('icon', 'fas fa-trophy');
+            $menu->addChild('app_typography', ['route' => 'app_typography'])->setAttribute('icon', 'fab fa-bootstrap');
+            $menu->addChild('api_entrypoint', ['route' => 'api_entrypoint'])->setAttribute('icon', 'fas fa-home');
+            $menu->addChild('app_build_form', ['route' => 'app_build_form'])->setAttribute('icon', 'fas fa-home');
+        }
 
 
 // $menu->addChild('admin', ['route' => 'easyadmin']);
 
 // ... add more children
-
-return $this->cleanupMenu($menu);
-}
+        return $menu;
+        return $this->cleanupMenu($menu);
+    }
 
 
 
