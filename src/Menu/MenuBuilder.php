@@ -26,6 +26,7 @@ class MenuBuilder extends LandingMenuBuilder
 
     public function createAdminMenu(array $options)
     {
+
         $menu = $this->factory->createItem('root')
             ->setExtra('translation_domain', true)
         ;

@@ -17,17 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class SurveyController extends AbstractController
 {
     /**
-     * @Route("/", name="survey_index", methods={"GET"})
+     * @Route("/", name="survey_list", methods={"GET"})
      */
     public function index(SurveyRepository $surveyRepository): Response
     {
         return $this->render('survey/index.html.twig', [
-            'surveys' => $surveyRepository->findBy(['isPublic' => true, 'isPublished' => true]),
+            'surveys' => $surveyRepository->findBy([]),
         ]);
     }
 
     /**
-     * @Route("/dashboard", name="survey_dashboard", methods={"GET"})
+     * @Route("/dashboard", name="survey_dashboard", methods={"GET"}, options={"showSurveyMenu": true})
      * @IsGranted("ROLE_USER")
      */
     public function dashboard(SurveyRepository $surveyRepository): Response

@@ -3,6 +3,6 @@ home:
     intro: 'Intro to formeo-demo Title'
     description: 'Symfony5 (with api-platform) and Formeo Javascript library'
 
-survey_dashboard: Manage My Surveys
+survey_dashboard: Survey Administration
 survey_dashboard.description: Create and Manage Surveys
 
